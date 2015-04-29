@@ -1,0 +1,28 @@
+html, body{
+	height: 100%;
+}
+
+h1, h2, h3, h4, h5, h6{
+	text-align: center;
+}
+
+h1.mainHeading{
+	margin-bottom: 50px;
+	color: #446CB3;
+	font-size: 50px;
+}
+
+select#challenges{
+	width: 60%;
+	margin-left: 20%;
+	font-size: 30px;
+	margin-bottom: 75px;
+}
+
+
+
+
+input{
+	display: block;
+	width: 100%;
+}
