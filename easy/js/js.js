@@ -31,7 +31,9 @@ $(function(){
 	// Some generic effects also occur (like fading of challenge header)
 	// Triggers name of challenge, which is event that each different function listens for
 	$challengesDropdown.change(function(){
+		$('body').removeClass('firstReverse');
 		$challengeHeader.html('Challenge #' + ($(':selected').index()+1)+': ');
+		$challengeHeader2.html($(':selected').text());
 		$('.input').val('');
 		$('.output').val('');
 		$(this).trigger($(this).val());
@@ -58,8 +60,7 @@ $(function(){
 	});
 	// Code necessary since first challenge loads up, isn't triggerd
 	$challengeHeader.html('Challenge #1: String Reverse');
-	$challengeHeader2.html('This program produces the reverse string of a given input');
-	$('.input').bind("enterKey",function(e){
+	$('body.firstReverse .input').bind("enterKey",function(e){
 		var input = $('.input').val();
 		var result = "";
 		for(var i=input.length-1; i>=0; i--){
@@ -73,7 +74,6 @@ $(function(){
 	// ___________________________First Factorial Code  #2____________________________
 	$challengesDropdown.bind("firstFactorial", function(){
 		$challengeHeader.append('First Factorial');
-		$challengeHeader2.html('this program calculates the factorial of a number input');
 		$('.input').bind("enterKey",function(e){
 			var num = Number($('.input').val());
 			var result = 1;
@@ -93,11 +93,10 @@ $(function(){
 	});
 
 
-	// Longest Word Code  #3
+	// __________________________________Longest Word Code  #3________________________
 	// can't quite figure out best way to do it.. so far iterating through alphabet string
 	$challengesDropdown.bind("longestWord", function(){
 		$challengeHeader.append('Longest Word of a String NOT WORKING YET');
-		$challengeHeader2.html('finds longest word of an input string');
 		$('input.input').bind("enterKey",function(e){
 			var alphabet = 'abcdefghijklmnopqrstuvwxyz';
 			var input = $('input.input').val().toLowerCase();
@@ -118,12 +117,11 @@ $(function(){
 
 
 
-	// Letter Changes #4
+	// ______________________Letter Changes #4____________________________________
 	// Take str parameter passed and modify it depending on each character's position in alphabet
 
 	$challengesDropdown.bind("letterChanges", function(){
 		$challengeHeader.append('Letter Changes');
-		$challengeHeader2.html('shifts each letter of string one spot in alphabet, and capitalizes vowels');
 		$('.input').bind("enterKey",function(e){
 			var string = $('.input').val();
 			var alphabet = "abcdefghijklmnopqrstuvwxyz";
@@ -141,11 +139,47 @@ $(function(){
 					}
 				}
 			}
+			// Make result a string
 			result=result.join('');
 			$('.output').val(result);
+		});
+	});
 
 
-			
+
+//______________________Simple Adding #5___________________________
+// Take number parameter, add from 1 to that number
+	$challengesDropdown.bind("simpleAdding", function(){
+		$challengeHeader.append('Simple Adding');
+		$('.input').bind("enterKey",function(e){
+			var num = Number($('.input').val());
+			if(num<0){
+				$('.error').html('please provide a positive number');
+				return;
+			}
+			result=0;
+			for(var i=0; i<=num; i++){
+				result+=i;
+			}
+			$('.output').val(result);
+		});
+	});
+
+
+	//_______________________Letter Capitalize #6___________________________
+// Take number parameter, add from 1 to that number
+	$challengesDropdown.bind("letterCapitalize", function(){
+		$challengeHeader.append('Letter Capitalize');
+		$('.input').bind("enterKey",function(e){
+			var string = $('.input').val().split('');
+			string[0]=string[0].toUpperCase();
+			for(var i=0; i<string.length; i++){
+				if(string[i]===" "){
+					string[i+1]=string[i+1].toUpperCase();
+				}
+			}
+			result = string.join('');
+			$('.output').val(result);
 		});
 	});
 
@@ -164,7 +198,8 @@ $(function(){
 
 // Generic thing, copy and paste ot use it for each
 // $challengesDropdown.bind("letterChanges", function(){
-// 		$challengeHeader.html('Challenge #4: Letter Changes');
+// 		$challengeHeader.append('Letter Changes');
+// 		$challengeHeader2.html('changing letters of string');
 // 		$('.input').bind("enterKey",function(e){
 // 			var string = $('.input').val();
 
