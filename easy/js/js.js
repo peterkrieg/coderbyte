@@ -166,7 +166,7 @@ $('#challenges option').each(function(){
 				$('.error').html('please provide a positive number');
 				return;
 			}
-			result=0;
+			var result=0;
 			for(var i=0; i<=num; i++){
 				result+=i;
 			}
@@ -187,7 +187,29 @@ $('#challenges option').each(function(){
 					string[i+1]=string[i+1].toUpperCase();
 				}
 			}
-			result = string.join('');
+			var result = string.join('');
+			$('.output').val(result);
+		});
+	});
+
+		//_______________________Simple Symbols #7___________________________
+// String inputted must have letters surrounded by a + sign.  
+// True if that condition holds, false otherwise
+	$challengesDropdown.bind("simpleSymbols", function(){
+		$challengeHeader.append('Simple Symbols');
+		$('.input').bind("enterKey",function(e){
+			var string = $('.input').val();
+			var result = true;
+			for(var i=0; i<string.length; i++){
+				var code = string[i].charCodeAt(0);
+				if  ( ((code >= 65) && (code <= 90)) || ((code >= 97) && (code <= 122)) ){
+					console.log('letter of alphabet');
+					if(string[i-1]!=='+' || string[i+1]!=='+'){
+						var result = 'false';
+						break;
+					}
+				}
+			}
 			$('.output').val(result);
 		});
 	});
