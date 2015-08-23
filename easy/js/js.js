@@ -45,10 +45,10 @@ $('#challenges option').each(function(){
 		$challengeHeader2.html($(':selected').text());
 		$('.input').val('');
 		$('.output').val('');
+		// Triggers function that corresponds to js code for each challenge
 		$(this).trigger($(this).val());
 		$challengeHeader.hide().fadeIn(500);
 		$challengeHeader2.hide().fadeIn(800);
-		// This code automatically numbers challenges, based on order of children in <select>element
 	});
 
 
@@ -197,13 +197,13 @@ $('#challenges option').each(function(){
 // True if that condition holds, false otherwise
 	$challengesDropdown.bind("simpleSymbols", function(){
 		$challengeHeader.append('Simple Symbols');
+		$challengeHeader2.text('Simple Symbols: checking if characters are in right positions.  String must have each letter surrounded by a + sign.  If it is not, false is returned.  Otherwise true.')
 		$('.input').bind("enterKey",function(e){
 			var string = $('.input').val();
 			var result = true;
 			for(var i=0; i<string.length; i++){
 				var code = string[i].charCodeAt(0);
 				if  ( ((code >= 65) && (code <= 90)) || ((code >= 97) && (code <= 122)) ){
-					console.log('letter of alphabet');
 					if(string[i-1]!=='+' || string[i+1]!=='+'){
 						var result = 'false';
 						break;

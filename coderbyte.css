@@ -7,6 +7,11 @@ h1, h2, h3, h4, h5, h6{
 	text-transform: capitalize;
 }
 
+h5#challengeHeader2{
+	max-width: 600px;
+	margin: auto;
+}
+
 
 h1.mainHeading{
 	margin-bottom: 50px;
