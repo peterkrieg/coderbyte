@@ -5,6 +5,8 @@ $(function(){
 	var $challengeHeader = $('h3#challengeHeader');
 	var $challengeHeader2 = $('h5#challengeHeader2');
 	var $challengesDropdown = $('select#challenges');
+	var $input = $('.input');
+	var $output = $('.output');
 
 
 
@@ -25,6 +27,13 @@ $(function(){
 			$(this).trigger("enterKey");
 		}
 	});
+
+
+// Minor numbering of each option of drop down menu
+$('#challenges option').each(function(){
+	$(this).prepend('Challenge #' +($(this).index()+1)+ ': ');
+})
+
 
 	// Whenever different option on select menu is clicked, it triggers an event
 	// for differnet function of each challenge
