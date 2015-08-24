@@ -158,54 +158,146 @@ $('#challenges option').each(function(){
 
 //______________________Simple Adding #5___________________________
 // Take number parameter, add from 1 to that number
-	$challengesDropdown.bind("simpleAdding", function(){
-		$challengeHeader.append('Simple Adding');
-		$('.input').bind("enterKey",function(e){
-			var num = Number($('.input').val());
-			if(num<0){
-				$('.error').html('please provide a positive number');
-				return;
-			}
-			var result=0;
-			for(var i=0; i<=num; i++){
-				result+=i;
-			}
-			$('.output').val(result);
-		});
+$challengesDropdown.bind("simpleAdding", function(){
+	$challengeHeader.append('Simple Adding');
+	$('.input').bind("enterKey",function(e){
+		var num = Number($('.input').val());
+		if(num<0){
+			$('.error').html('please provide a positive number');
+			return;
+		}
+		var result=0;
+		for(var i=0; i<=num; i++){
+			result+=i;
+		}
+		$('.output').val(result);
 	});
+});
 
 
 	//_______________________Letter Capitalize #6___________________________
 // Take number parameter, add from 1 to that number
-	$challengesDropdown.bind("letterCapitalize", function(){
-		$challengeHeader.append('Letter Capitalize');
-		$('.input').bind("enterKey",function(e){
-			var string = $('.input').val().split('');
-			string[0]=string[0].toUpperCase();
-			for(var i=0; i<string.length; i++){
-				if(string[i]===" "){
-					string[i+1]=string[i+1].toUpperCase();
-				}
+$challengesDropdown.bind("letterCapitalize", function(){
+	$challengeHeader.append('Letter Capitalize');
+	$('.input').bind("enterKey",function(e){
+		var string = $('.input').val().split('');
+		string[0]=string[0].toUpperCase();
+		for(var i=0; i<string.length; i++){
+			if(string[i]===" "){
+				string[i+1]=string[i+1].toUpperCase();
 			}
-			var result = string.join('');
-			$('.output').val(result);
-		});
+		}
+		var result = string.join('');
+		$('.output').val(result);
 	});
+});
 
 		//_______________________Simple Symbols #7___________________________
 // String inputted must have letters surrounded by a + sign.  
 // True if that condition holds, false otherwise
-	$challengesDropdown.bind("simpleSymbols", function(){
-		$challengeHeader.append('Simple Symbols');
-		$challengeHeader2.text('Simple Symbols: checking if characters are in right positions.  String must have each letter surrounded by a + sign.  If it is not, false is returned.  Otherwise true.')
+$challengesDropdown.bind("simpleSymbols", function(){
+	$challengeHeader.append('Simple Symbols');
+	$challengeHeader2.text('Simple Symbols: checking if characters are in right positions.  String must have each letter surrounded by a + sign.  If it is not, false is returned.  Otherwise true.')
+	$('.input').bind("enterKey",function(e){
+		var string = $('.input').val();
+		var result = true;
+		for(var i=0; i<string.length; i++){
+			var code = string[i].charCodeAt(0);
+			if  ( ((code >= 65) && (code <= 90)) || ((code >= 97) && (code <= 122)) ){
+				if(string[i-1]!=='+' || string[i+1]!=='+'){
+					var result = 'false';
+					break;
+				}
+			}
+		}
+		$('.output').val(result);
+	});
+});
+
+
+//_______________________Check Nums #8___________________________
+$challengesDropdown.bind("checkNums", function(){
+	$challengeHeader.append('Check Numbers');
+	$challengeHeader2.text('Compare size of 2 numbers.  If num2 is bigger, return true.  Smaller, return false.  Equal, return -1.  Enter number as 1,2 comma, no space.');
+	$('.input').bind("enterKey",function(e){
+		var string = $('.input').val();
+		var nums = string.split(',');
+		var num1= Number(nums[0]);
+		var num2 = Number(nums[1]);
+		var result ='';
+		if(num2>num1){
+			result = 'true';
+		}
+		else if(num2<num1){
+			result = 'false';
+		}
+		else{
+			result = '-1';
+		}
+		$('.output').val(result);
+	});
+});
+
+
+	//_______________________Time Convert #9___________________________
+	$challengesDropdown.bind("timeConvert", function(){
+		$challengeHeader.append('Time Convert');
+		$challengeHeader2.text('Timem convert.  String input is number, and needs to convert into time.  Ie, 126 would be 2:6.  45 would be 0:45');
+		$input.bind("enterKey",function(e){
+			var string = $input.val();
+			var num = Number(string);
+			var result = '';
+			if(num>=60){
+				result+= Math.floor((num/60))+':'+(num%60);
+			}
+			else if(num<60){
+				result+='0:'+num;
+			}
+			$output.val(result);
+		});
+	});
+
+	//_______________________Alphabet Soup #10___________________________
+	$challengesDropdown.bind("alphabetSoup", function(){
+		$challengeHeader.append('Alphabet Soup');
+		$challengeHeader2.text('String entered.  Must sort string and rearrange characters based on alphabetical order.  Ie, "hello" would become "ehllo');
 		$('.input').bind("enterKey",function(e){
-			var string = $('.input').val();
-			var result = true;
+			var string = $('.input').val().toLowerCase();
+			var result = string[0];
+			for(var i=1; i<string.length; i++){
+				var newCode = string[i].charCodeAt(0);
+				for(var k=0; k<result.length; k++){
+					var code = result[k].charCodeAt(0);
+					if(newCode<=code){
+						result = result.slice(0, k) + string[i] +result.slice(k);
+						break;
+					}
+					else if(k===result.length-1){
+						result = result + string[i];
+						break;
+					}
+				}
+			}
+			$('.output').val(result);
+		});
+	});
+
+	//_______________________AB Check #11___________________________
+	$challengesDropdown.bind("ABCheck", function(){
+		$challengeHeader.append('AB Check');
+		$challengeHeader2.text('Return true if characters and b are separated by exactly 3 places anywhere in string at least once. Otherwise return false');
+		$('.input').bind("enterKey",function(e){
+			var string = $('.input').val().toLowerCase();
+			var result = false;
 			for(var i=0; i<string.length; i++){
-				var code = string[i].charCodeAt(0);
-				if  ( ((code >= 65) && (code <= 90)) || ((code >= 97) && (code <= 122)) ){
-					if(string[i-1]!=='+' || string[i+1]!=='+'){
-						var result = 'false';
+				if(string[i]==='a' || string[i]==='b'){
+					var letter = string[i];
+					if(letter==='a' && string[i+4]==='b'){
+						result = true;
+						break;
+					}
+					else if(letter==='b' && string[i+4]==='a'){
+						result = true;
 						break;
 					}
 				}
@@ -215,49 +307,26 @@ $('#challenges option').each(function(){
 	});
 
 
-//_______________________Check Nums #8___________________________
-	$challengesDropdown.bind("checkNums", function(){
-		$challengeHeader.append('Check Numbers');
-		$challengeHeader2.text('Compare size of 2 numbers.  If num2 is bigger, return true.  Smaller, return false.  Equal, return -1.  Enter number as 1,2 comma, no space.');
-		$('.input').bind("enterKey",function(e){
-			var string = $('.input').val();
-			var nums = string.split(',');
-			var num1= Number(nums[0]);
-			var num2 = Number(nums[1]);
-			var result ='';
-			if(num2>num1){
-				result = 'true';
+	//_______________________Vowel Count #12___________________________
+	$challengesDropdown.bind("vowelCount", function(){
+		$challengeHeader.append('Vowel Count');
+		$challengeHeader2.text('Count Number of vowels in string.  Return number.  Y does not count as vowel');
+		$input.bind("enterKey",function(e){
+			var string = $input.val();
+			var numVowels=0;
+			var vowels = 'aeiou';
+			for(var i=0; i<string.length; i++){
+				for(var k=0; k<vowels.length; k++){
+					if(string[i]===vowels[k]){
+						numVowels++;
+						break;
+					}
+				}
 			}
-			else if(num2<num1){
-				result = 'false';
-			}
-			else{
-				result = '-1';
-			}
-			$('.output').val(result);
+			var result = 'Number of vowels is: ' +numVowels;
+			$output.val(result);
 		});
 	});
-
-
-	//_______________________Time Convert #9___________________________
-	$challengesDropdown.bind("timeConvert", function(){
-		$challengeHeader.append('Time Convert');
-		$challengeHeader2.text('Timem convert.  String input is number, and needs to convert into time.  Ie, 126 would be 2:6.  45 would be 0:45');
-		$('.input').bind("enterKey",function(e){
-			var string = $('.input').val();
-			var num = Number(string);
-			var result = '';
-			if(num>=60){
-				result+= Math.floor((num/60))+':'+(num%60);
-			}
-			else if(num<60){
-				result+='0:'+num;
-			}
-			$('.output').val(result);
-		});
-	});
-
-
 
 
 
