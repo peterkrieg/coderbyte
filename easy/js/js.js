@@ -215,28 +215,53 @@ $('#challenges option').each(function(){
 	});
 
 
+//_______________________Check Nums #8___________________________
+	$challengesDropdown.bind("checkNums", function(){
+		$challengeHeader.append('Check Numbers');
+		$challengeHeader2.text('Compare size of 2 numbers.  If num2 is bigger, return true.  Smaller, return false.  Equal, return -1.  Enter number as 1,2 comma, no space.');
+		$('.input').bind("enterKey",function(e){
+			var string = $('.input').val();
+			var nums = string.split(',');
+			var num1= Number(nums[0]);
+			var num2 = Number(nums[1]);
+			var result ='';
+			if(num2>num1){
+				result = 'true';
+			}
+			else if(num2<num1){
+				result = 'false';
+			}
+			else{
+				result = '-1';
+			}
+			$('.output').val(result);
+		});
+	});
+
+
+	//_______________________Time Convert #9___________________________
+	$challengesDropdown.bind("timeConvert", function(){
+		$challengeHeader.append('Time Convert');
+		$challengeHeader2.text('Timem convert.  String input is number, and needs to convert into time.  Ie, 126 would be 2:6.  45 would be 0:45');
+		$('.input').bind("enterKey",function(e){
+			var string = $('.input').val();
+			var num = Number(string);
+			var result = '';
+			if(num>=60){
+				result+= Math.floor((num/60))+':'+(num%60);
+			}
+			else if(num<60){
+				result+='0:'+num;
+			}
+			$('.output').val(result);
+		});
+	});
 
 
 
 
 
 
-
-
-
-
-
-
-// Generic thing, copy and paste ot use it for each
-// $challengesDropdown.bind("letterChanges", function(){
-// 		$challengeHeader.append('Letter Changes');
-// 		$challengeHeader2.html('changing letters of string');
-// 		$('.input').bind("enterKey",function(e){
-// 			var string = $('.input').val();
-
-
-// 		});
-// 	});
 
 
 
