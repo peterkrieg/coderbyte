@@ -329,6 +329,126 @@ $challengesDropdown.bind("checkNums", function(){
 	});
 
 
+//_______________________Word Count #13___________________________
+$challengesDropdown.bind("wordCount", function(){
+	$challengeHeader.append('Word Count');
+	$challengeHeader2.text('Counts Number of words of inputted string.  Words separated by single space');
+	$input.bind("enterKey",function(e){
+		var string = $input.val();
+		string = string.split(' ');
+		result = string.length;
+		$output.val(result);
+	});
+});
+
+//_______________________Ex Oh #14___________________________
+$challengesDropdown.bind("exOh", function(){
+	$challengeHeader.append('Ex Oh');
+	$challengeHeader2.text('Takes string input, returns true if number of xs in string equals number of os.  otherwise, false.');
+	$input.bind("enterKey",function(e){
+		var string = $input.val();
+		var numX = 0;
+		var numO = 0;
+		var result = false;
+		for(var i=0; i<string.length; i++){
+			if(string[i]==='x'){
+				numX++;
+			}
+			else if(string[i]==='o'){
+				numO++;
+			}
+		}
+		if(numX===numO){
+			result = true;
+		}
+		$output.val(result);
+	});
+});
+
+//_______________________Palindrome #15___________________________
+$challengesDropdown.bind("palindrome", function(){
+	$challengeHeader.append('Palindrome');
+	$challengeHeader2.text('Returns true if string is palindrome (spelled same forwards and back.  Otherwise returns false');
+		$input.bind("enterKey",function(e){
+			var string = $input.val().toLowerCase();
+			var newString = '';
+			var result = true;
+		// First need to make newString with no punctuation or numbers
+		for(var i=0; i<string.length; i++){
+			var code = string[i].charCodeAt(0);
+			if(code>=97 && code<=122){
+				newString+=string[i];
+			}
+		}
+		for(var i=0; i<newString.length; i++){
+			// If at any point characters on either side of string don't match up, result is false, script over
+			if(newString[i]!==newString[newString.length-i-1]){
+				result = false;
+				break;
+			}
+		}
+		$output.val(result);
+	});
+	});
+
+//_______________________Arith Geo #16___________________________
+$challengesDropdown.bind("arithGeo", function(){
+	$challengeHeader.append('Arith Geo');
+	$challengeHeader2.text('Enter a string sequence of numbers, separated by comma, no space.  Ie, 2,4,6,8,10.  Program returns string "Arithmetic" if sequence is arithmetic, and "Geometric" if geometric.  If sequence does not follow either pattern, -1 is returned');
+	$input.bind("enterKey",function(e){
+		var string = $input.val();
+		var sequence = string.split(',');
+		var result = '';
+		var prevNum = sequence[0];
+		var arithmetic = true;
+		var geometric = true;
+		for(var i =1; i<sequence.length-1; i++){
+			var currentNum = sequence[i];
+			var nextNum = sequence[i+1];
+			if(nextNum-currentNum !== currentNum-prevNum){
+				arithmetic = false;
+			}
+			if(nextNum/currentNum !== currentNum/prevNum){
+				geometric = false;
+			}
+			prevNum=sequence[i];
+		}
+		// determining what sequence is
+		if(arithmetic){
+			result="arithmetic";
+		}
+		else if(geometric){
+			result="geometric";
+		}
+		else{
+			result="sequence entered is neither aritmetic nor geometric"
+		}
+		$output.val(result);
+	});
+});
+
+//_______________________Array Addition I #17___________________________
+$challengesDropdown.bind("arrayAdditionI", function(){
+	$challengeHeader.append('Array Addition I    CANNOT FIGURE OUT YET');
+	$challengeHeader2.text('Sequence of numbers inputted, separated by comma only, like 1,2,3,5 for example.  Program return true if any combination of numbers can be combined to equal largest number of array.  otherwise, false.');
+	$input.bind("enterKey",function(e){
+		var string = $input.val();
+		var sequence = string.split(',');
+		// inefficient way to convert array of string nums to array of actual nums
+		for(var i=0; i<sequence.length; i++){
+			sequence[i]= Number(sequence[i]);
+		}
+		var maxNum = Math.max.apply(null, sequence);
+
+		$output.val('max number of array is '+maxNum);
+	});
+});
+
+
+
+
+
+
 
 
 
