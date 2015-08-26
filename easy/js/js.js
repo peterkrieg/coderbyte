@@ -444,6 +444,48 @@ $challengesDropdown.bind("arrayAdditionI", function(){
 	});
 });
 
+//_______________________Letter Count I #18___________________________
+$challengesDropdown.bind("letterCountI", function(){
+	$challengeHeader.append('Letter Count I CANNOT FIGURE OUT');
+	$challengeHeader2.text('CANNOT FIGURE OUT.  String is inputted.  First Word that has greatest number of repeated letters is returned.  If there are no words with repeated letters, than return -1');
+	$input.bind("enterKey",function(e){
+		var string = $input.val().toLowerCase();
+		var words = string.split(' ');
+		var result = -1;
+		for(var i=0; i<words.length; i++){
+			var word = words[i].split('');
+			word = word.sort();
+			word = word.join('');
+			var prevMax = 1;
+			var newMax = 1;
+			var newMax2 = 1;
+			for(var k=0; k<word.length-1; k++){
+				if(word[k]===word[k+1]){
+					newMax++;
+					console.log('repeat');
+				}
+				else if(word[k]!==word[k+1] && newMax>prevMax || newMax>prevMax && k===word.length-2){
+					prevMax = newMax;
+					newMax = 1;
+				}
+			}
+			if(newMax > newMax2){
+				newMax2 = newMax;
+				var result = words[i];
+			}
+		}
+
+
+
+		$output.val(result);
+	});
+});
+
+
+
+
+
+
 
 
 
