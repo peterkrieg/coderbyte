@@ -32,7 +32,7 @@ $(function(){
 // Minor numbering of each option of drop down menu
 $('#challenges option').each(function(){
 	$(this).prepend('Challenge #' +($(this).index()+1)+ ': ');
-})
+});
 
 
 	// Whenever different option on select menu is clicked, it triggers an event
@@ -197,7 +197,7 @@ $challengesDropdown.bind("letterCapitalize", function(){
 // True if that condition holds, false otherwise
 $challengesDropdown.bind("simpleSymbols", function(){
 	$challengeHeader.append('Simple Symbols');
-	$challengeHeader2.text('Simple Symbols: checking if characters are in right positions.  String must have each letter surrounded by a + sign.  If it is not, false is returned.  Otherwise true.')
+	$challengeHeader2.text('Simple Symbols: checking if characters are in right positions.  String must have each letter surrounded by a + sign.  If it is not, false is returned.  Otherwise true.');
 	$('.input').bind("enterKey",function(e){
 		var string = $('.input').val();
 		var result = true;
@@ -205,7 +205,7 @@ $challengesDropdown.bind("simpleSymbols", function(){
 			var code = string[i].charCodeAt(0);
 			if  ( ((code >= 65) && (code <= 90)) || ((code >= 97) && (code <= 122)) ){
 				if(string[i-1]!=='+' || string[i+1]!=='+'){
-					var result = 'false';
+					result = 'false';
 					break;
 				}
 			}
@@ -462,7 +462,6 @@ $challengesDropdown.bind("letterCountI", function(){
 			for(var k=0; k<word.length-1; k++){
 				if(word[k]===word[k+1]){
 					newMax++;
-					console.log('repeat');
 				}
 				else if(word[k]!==word[k+1] && newMax>prevMax || newMax>prevMax && k===word.length-2){
 					prevMax = newMax;
@@ -471,7 +470,7 @@ $challengesDropdown.bind("letterCountI", function(){
 			}
 			if(newMax > newMax2){
 				newMax2 = newMax;
-				var result = words[i];
+				result = words[i];
 			}
 		}
 
@@ -480,6 +479,64 @@ $challengesDropdown.bind("letterCountI", function(){
 		$output.val(result);
 	});
 });
+
+//_______________________Second GreatLow #19___________________________
+$challengesDropdown.bind("secondGreatLow", function(){
+	$challengeHeader.append('Second Great Low');
+	$challengeHeader2.text('Takes array of numbers, and returns 2nd lowest and 2nd highest numbers.  Input numbers separated by comma, no spaces.  Like, 1,9,110,44');
+	$input.bind("enterKey",function(e){
+		var string = $input.val();
+		var numbers = string.split(',');
+		for(var i=0; i<numbers.length; i++){
+			numbers[i]=Number(numbers[i]);
+		}
+		numbers.sort(function(a,b){
+			return a-b;
+		});
+		console.log(numbers);
+		if(numbers.length>2){
+			result = numbers[1]+","+numbers[numbers.length-1];
+		}
+		// Remaining case if array is 2 (challenge said it has to be at least 2)
+		else {
+			result= numbers[0]+","+numbers[1];
+		}
+
+
+		$output.val(result);
+	});
+});
+
+
+//_______________________Division Stringified #20___________________________
+$challengesDropdown.bind("divisionStringified", function(){
+	$challengeHeader.append('Division Stringified');
+	$challengeHeader2.text('Input 2 numbers separated by comma, like 10,3.  Program will return result of first number divided by 2nd number, as string, with appropriate commas (ie, 12,534)');
+	$input.bind("enterKey",function(e){
+		var string = $input.val();
+		var numbers = string.split(',');
+ 		for(var i=0; i<2; i++){
+			numbers[i]=Number(numbers[i]);
+		}
+		// Rounds resulting division, converts to string, then to array of characters
+		var result=(Math.round(numbers[0]/numbers[1])).toString().split('');
+		// If number is 1,000 or greater, find start index for splicing
+		if(result.length>3){
+			var startIndex = (result.length%3);
+			if(result.length%3===0){
+				startIndex = 3;
+			}
+			// Looping through number, and adding comma every 4 spots (1 is for comma added before)
+			for(var k=startIndex; k<result.length; k+=4){
+				console.log(result.length);
+				result.splice(k, 0, ",");
+			}
+		}
+		$output.val(result.join(''));
+	});
+});
+
+
 
 
 
