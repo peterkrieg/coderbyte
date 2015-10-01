@@ -639,6 +639,100 @@ $challengesDropdown.bind("meanMode", function(){
 });
 
 
+//_______________________Dash Insert #23___________________________
+$challengesDropdown.bind("dashInsert", function(){
+	$challengeHeader.append('Dash Insert');
+	$challengeHeader2.text('Enter a string of numbers, like 938421873, and program inserts dashes (-) between each 2 odd numbers');
+	$input.bind("enterKey",function(e){
+		// splits string into array of characters
+		var string = $input.val().split('');
+		var result = '';
+		for(var i=0; i<string.length-1; i++){
+			if(Number(string[i])%2===1 && Number(string[i+1])%2===1){
+				string.splice(i+1, 0, "-");
+				i++;
+			}
+		}
+		result = string.join('');
+		$output.val(result);
+	});
+});
+
+//_______________________Swap Case #24___________________________
+$challengesDropdown.bind("swapCase", function(){
+	$challengeHeader.append('Swap Case');
+	$challengeHeader2.text('Swaps Case of each character of string.  Numbers and symbols need to stay way they are');
+	$input.bind("enterKey",function(e){
+		var string = $input.val();
+		var result = '';
+		for(var i =0; i<string.length; i++){
+			if(string[i].toLowerCase()===string[i]) {  // Then character is lowercase, convert to uppercase
+				result+= string[i].toUpperCase();
+			}
+			else{
+				result+=string[i].toLowerCase();
+			}
+		}
+		$output.val(result);
+	});
+});
+
+//_______________________Number Addition #25___________________________
+$challengesDropdown.bind("numberAddition", function(){
+	$challengeHeader.append('Number Addition');
+	$challengeHeader2.text('Enter a string containing text and numbers.  Program searches for all numbers in string, adds together, returns sum');
+	$input.bind("enterKey",function(e){
+		var string = $input.val();
+		var currentNum='';
+		var sum=0;
+		var result;
+		for(var i=0; i<string.length; i++){
+			if(!isNaN(string[i]) && string[i]!==' '){  // If string is a number (isn't not a number)  '2' returns false for isNaN, can be string.  Also, if character isn't space.. why does a space (' ') count as a number for isNaN()??
+				currentNum += string[i]; // currentNum string is concatenated, so 22 makes twenty two, not 4
+				if(i===string.length-1){ // condition that last character of string is number, which wouldn't add up otherwise
+					sum+= Number(currentNum);
+					break;
+				}
+			} 
+			else if(isNaN(string[i]) || string[i]===' ' && currentNum){
+			// Condition that current char isn't number, or is space, but there is number accumulating (ie, 22a, 22 has formed, when hits a would trigger this)
+				sum+= Number(currentNum);
+				currentNum='';
+			}  
+		}
+		result = sum;
+		$output.val(result);
+	});
+});
+
+//_______________________Third Greatest #26___________________________
+$challengesDropdown.bind("thirdGreatest", function(){
+	$challengeHeader.append('Third Greatest');
+	$challengeHeader2.text('Enter "array" of strings separated by comma, like people,bob,hello,world.  Program returns third larget word.  If tie, return last word that is of longest');
+	$input.bind("enterKey",function(e){
+		var string = $input.val();
+		var stringArr = string.split(',');
+		var result='';
+		// sorts array based on length, biggest first, also keeping order of ties, to preserve order
+		stringArr.sort(function(a,b){
+			return b.length - a.length;
+		});
+		console.log(stringArr);
+		result = stringArr[2];
+		// But if array has ties, need to move through array, until next lowest number found
+		for (var i=2; stringArr[i].length===stringArr[i+1].length; i++){
+			if(i ===stringArr.length-2){ // If series of same numbers ,needs to stop at last element of array
+				result=stringArr[i+1];
+				break;
+			}
+			result = stringArr[i+1];
+		}
+
+		$output.val(result);
+	});
+});
+
+
 
 
 
