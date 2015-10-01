@@ -421,7 +421,7 @@ $challengesDropdown.bind("arithGeo", function(){
 			result="geometric";
 		}
 		else{
-			result="sequence entered is neither aritmetic nor geometric"
+			result="sequence entered is neither aritmetic nor geometric";
 		}
 		$output.val(result);
 	});
@@ -515,7 +515,7 @@ $challengesDropdown.bind("divisionStringified", function(){
 	$input.bind("enterKey",function(e){
 		var string = $input.val();
 		var numbers = string.split(',');
- 		for(var i=0; i<2; i++){
+		for(var i=0; i<2; i++){
 			numbers[i]=Number(numbers[i]);
 		}
 		// Rounds resulting division, converts to string, then to array of characters
@@ -535,6 +535,110 @@ $challengesDropdown.bind("divisionStringified", function(){
 		$output.val(result.join(''));
 	});
 });
+
+//_______________________Counting Minutes I #21___________________________
+$challengesDropdown.bind("countingMinutesI", function(){
+	$challengeHeader.append('Counting Minutes I');
+	$challengeHeader2.text('Pass string of 2 times, in format like 12:30pm-12:00am.  Must include am/pm, and have - separating 2 times, no spaces.  Program will calculate time in between 1st and 2nd time, in minutes.  Ie, 9:00am-10:00am would return 60');
+	$input.bind("enterKey",function(e){
+		var string = $input.val().toLowerCase();
+		var times = string.split('-');
+		// Array that holds 2 booleans.  Each boolean corresponds to if time is AM.  ie, true, false means am, pm
+		var am = [true, true];
+		var timesSeparate=[];
+		var hours=[];
+		var minutes = [];
+		var totalMinutes = [];
+		var result;
+		// for loop that does bunch of stuff, for each of 2 different times.  so just 2 total loops
+		for(var i=0; i<2; i++){
+			if(times[i].indexOf('am')===-1){
+				am[i]=false;
+			}
+			// Convert entry of array to string, delete am or pm part
+			times[i]=times[i].toString().replace('am','').replace('pm','');
+			// Split entry of array into 2 parts, hours and minutes, separated by colon (:)
+			timesSeparate = times[i].split(':');
+			// Hours that are 12 should be 0, like military time, 12:30AM is 00:30
+			if(Number(timesSeparate[0])!==12){
+				hours[i]=Number(timesSeparate[0]);
+			}
+			else{
+				hours[i]=0;
+			}
+			minutes[i]=Number(timesSeparate[1]);
+			// Calculate total number of minutes, each time is
+			if(am[i]){
+				totalMinutes[i]=hours[i]*60+minutes[i];
+			}
+			// If time is PM, need to add 12*60 more minutes, 12 more hours
+			else{
+				totalMinutes[i]=(12+hours[i])*60+minutes[i];
+			}
+		}
+		var difference = totalMinutes[1]-totalMinutes[0];
+		// Formula to find true difference.  negative number means time2 would be day ahead of time1.  1440 min in day
+		if(difference<0){
+			result=1440-(difference*-1);
+		}
+		else{
+			result=difference;
+		}
+		$output.val(result);
+	});
+});
+
+//_______________________Mean Mode #22___________________________
+$challengesDropdown.bind("meanMode", function(){
+	$challengeHeader.append('Mean Mode');
+	$challengeHeader2.text('Program takes numbers, in comma separated list (ie, 1,4,5,6,2) and returns 1 if mode=mean, 0 if not equal');
+	$input.bind("enterKey",function(e){
+		var string = $input.val();
+		var sum =0;
+		var mean;
+		var mode = 0;
+		// Mode has to be at least 1, if there is 1 number in array
+		var modeRepeat = 1;
+		var modeRepeatRecord = 1;
+		// Splits string into array of numbers
+		var numbers = string.split(',').map(Number);
+		// Sort numbers array from least to greatest
+		numbers.sort(function(a,b){
+			return a-b;
+		});
+		for(var i=0; i<numbers.length-1; i++){
+			// Start adding up sum, to calculate mean
+			sum+=numbers[i];
+			// If current number = next number, it is match, and potential mode
+			if(numbers[i]===numbers[i+1]){
+				modeRepeat++;
+				// if number repetitions is greater than previous mode, new mode is found, and changed
+				if(modeRepeat>modeRepeatRecord){
+					modeRepeatRecord++;
+					mode = numbers[i];
+				}
+				// Make sure modeRepeat is 1
+				else{
+					modeRepeat=1;
+				}
+			}
+		}
+		// Messy mean calculation, because for loop ends 1 entry before last of array
+		mean = (sum+numbers[(numbers.length-1)])/numbers.length;
+		console.log('mean is ' +mean);
+		console.log('mode is ' +mode);
+		// If mean and moe are equal, return 1, otherwise 0, as per coderbyte instructions
+		if(mean===mode){
+			result=1;
+		}
+		else{
+			result=0;
+		}
+		$output.val(result);
+	});
+});
+
+
 
 
 
