@@ -691,18 +691,18 @@ $challengesDropdown.bind("numberAddition", function(){
 				currentNum += string[i]; // currentNum string is concatenated, so 22 makes twenty two, not 4
 				if(i===string.length-1){ // condition that last character of string is number, which wouldn't add up otherwise
 					sum+= Number(currentNum);
-					break;
-				}
-			} 
-			else if(isNaN(string[i]) || string[i]===' ' && currentNum){
+				break;
+			}
+		} 
+		else if(isNaN(string[i]) || string[i]===' ' && currentNum){
 			// Condition that current char isn't number, or is space, but there is number accumulating (ie, 22a, 22 has formed, when hits a would trigger this)
-				sum+= Number(currentNum);
-				currentNum='';
-			}  
-		}
-		result = sum;
-		$output.val(result);
-	});
+			sum+= Number(currentNum);
+			currentNum='';
+		}  
+	}
+	result = sum;
+	$output.val(result);
+});
 });
 
 //_______________________Third Greatest #26___________________________
@@ -731,6 +731,126 @@ $challengesDropdown.bind("thirdGreatest", function(){
 		$output.val(result);
 	});
 });
+
+//_______________________Powers of Two #27___________________________
+$challengesDropdown.bind("powersOfTwo", function(){
+	$challengeHeader.append('Powers Of Two');
+	$challengeHeader2.text('Input a number.  Program will return true if it is power of 2, and false if it is\'nt.  16 is true, 124 isn\'t, for example.');
+	$input.bind("enterKey",function(e){
+		var string = $input.val();
+		var num = Number(string);
+		// Default value of result is false, unlikely to find powers of 2, overall
+		var result = false;
+		// Function, the parameter just happens to match variable num, could name differently
+		function powerOfTwo(num){
+			console.log(num);
+			// If person tests 2, or at one point reaches 2, successful power of 2
+			if(num===2){
+				result = true;
+				return;
+			}
+			// to avoid program going infinitely, quickly sees if function not power of 2
+			else if(num%2!==0){
+				return;
+			}
+			// Recursive part of function.  Divides number by 2 and keeps going until equals 2 or under 2
+			else{
+				num /= 2;
+				powerOfTwo(num);
+
+			}
+		}
+		powerOfTwo(num);
+		$output.val(result);
+	});
+});
+
+//_______________________Additive Persistence #28___________________________
+$challengesDropdown.bind("additivePersistence", function(){
+	$challengeHeader.append('Additive Persistence');
+	$challengeHeader2.text('Input a number, which must be a positive integer. Program will return additive persistence, which is how many times you must add digits until you reach a single digit.  Ie, 2718 would be 2, because 2+7+1+8 equal 18, which still isn\'t 2 digits.  1+8 = 9 though');
+	$input.bind("enterKey",function(e){
+		var string = $input.val();
+		var str;
+		var num = Number(string);
+		var counter = 0;
+		var sum = 0;
+		var strArr = [];
+
+		function additivePersistence(num){
+			if(num<10){
+				return;
+			}
+			else{
+				// Resets sum every time
+				sum=0;
+				// converts number 22 back into string, "22"
+				str = num.toString();
+				strArr = str.split('');
+				for(var i=0; i<strArr.length; i++){
+					sum+=Number(strArr[i]);
+				}
+				// counter var keeps track of how many times you've added digits
+				counter++;
+				additivePersistence(sum);
+			}
+		}
+		// actual function call that runs everything
+		additivePersistence(num);
+		var result = counter;
+		$output.val(result);
+	});
+});
+
+//_______________________Multiplicative Persistence #29___________________________
+$challengesDropdown.bind("multiplicativePersistence", function(){
+	$challengeHeader.append('Multiplicative Resistance');
+	$challengeHeader2.text('Input a number, which must be a positive integer.  Program will return multiplicative persistence, aka number of times you must multiply digits in number until you reach single digit.  Ie, 39 would return 3, 3*9 is 27, 2*7 is 14, 1*4 is 4.');
+	$input.bind("enterKey",function(e){
+		var string = $input.val();
+		var num = Number(string);
+		var counter = 0;
+		// Unlike above where sum is automatically 0, product would be 1
+		var product = 1;
+		var strArr = [];
+
+		function additivePersistence(num){
+			if(num<10){
+				return;
+			}
+			else{
+				// Resets product every time
+				product=1;
+				// converts number 22 back into string, "22", then breaks up into elements of array
+				strArr = num.toString().split('');
+				for(var i=0; i<strArr.length; i++){
+					product*=Number(strArr[i]);
+				}
+				// counter var keeps track of how many times you've multiplied digits
+				counter++;
+				additivePersistence(product);
+			}
+		}
+		// actual function call that runs everything
+		additivePersistence(num);
+		var result = counter;
+		$output.val(result);
+	});
+});
+
+//_______________________Off Line Minimum #30___________________________
+$challengesDropdown.bind("offLineMinimum", function(){
+	$challengeHeader.append('Off Line Minimum');
+	$challengeHeader2.text('Don\'t Understand the rules of this one at all.. ');
+	$input.bind("enterKey",function(e){
+		var string = $input.val();
+		string = string.split(' ');
+		result = string.length;
+		$output.val(result);
+	});
+});
+
+
 
 
 
